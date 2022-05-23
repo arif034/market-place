@@ -19,4 +19,9 @@ public class TemplateController {
     public String getHello() {
         return "hello";
     }
+
+    @GetMapping("successfulLogin")
+    public String getSuccessfulUrl() {
+        return "successfulLogin";
+    }
 }
