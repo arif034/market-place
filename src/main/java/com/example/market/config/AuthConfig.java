@@ -1,46 +1,47 @@
 package com.example.market.config;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 public class AuthConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .and()
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/signin").permitAll()
-                .antMatchers("/lol").permitAll()
-                .antMatchers("/get-lol").permitAll()
-                //.antMatchers("/public/**").hasRole("NORMAL")//.permitAll()
+                .antMatchers("/hello").hasRole("STUDENT")
+                .antMatchers("/", "index", "/css/*", "/js/*")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/signin")
-                .loginProcessingUrl("/dologin")
-                .defaultSuccessUrl("/get-lol");
+                .loginPage("/login").permitAll();
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("john")
-                .password(this.passwordEncoder().encode("john")).roles("ADMIN");
-        auth.inMemoryAuthentication().withUser("miller")
-                .password(this.passwordEncoder().encode("miller")).roles("NORMAL");
-    }
-
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
+    protected UserDetailsService userDetailsService() {
+
+        UserDetails annaSmith = User.builder()
+                .username("annaSmith")
+                .password(passwordEncoder.encode("password"))
+                .roles("STUDENT").build();
+
+        return new InMemoryUserDetailsManager(annaSmith);
     }
 }
