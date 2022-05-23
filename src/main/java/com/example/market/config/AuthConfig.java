@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 public class AuthConfig extends WebSecurityConfigurerAdapter {
@@ -34,14 +35,31 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/anonymous*").anonymous()
                 .antMatchers("/login*").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/signin").permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/signin.html")
-                .loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/homepage.html", true);
+                .loginPage("/signin")
+                .loginProcessingUrl("/dologin")
+                .defaultSuccessUrl("/get-lol");
+
+//        http
+//                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/signin").permitAll()
+//                .antMatchers("/lol").permitAll()
+//                .antMatchers("/get-lol").permitAll()
+//                //.antMatchers("/public/**").hasRole("NORMAL")//.permitAll()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/signin")
+//                .loginProcessingUrl("/dologin")
+//                .defaultSuccessUrl("/get-lol");
     }
 
 }
