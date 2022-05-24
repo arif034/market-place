@@ -50,25 +50,10 @@ public class DBConfig {
         this.tomcatRemoveAbandonedConnections = tomcatRemoveAbandonedConnections;
         this.showSQL = showSQL;
         this.testWhileIdle = testWhileIdle;
+
+        log.info("url_master_database: " + url);
     }
 
-
-    @Bean
-    @Primary
-    public LocalContainerEntityManagerFactoryBean primaryEntityManagerFactory() {
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(false);
-        Map<String, String> properties = new HashMap<>();
-        properties.put("hibernate.implicit_naming_strategy", "org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy");
-        properties.put("hibernate.physical_naming_strategy", "org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy");
-        properties.put("hibernate.show_sql", String.valueOf(showSQL));
-        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-        factoryBean.setDataSource(primaryDataSource());
-        factoryBean.setPackagesToScan("com.example.market");
-        factoryBean.setJpaVendorAdapter(vendorAdapter);
-        factoryBean.getJpaPropertyMap().putAll(properties);
-        return factoryBean;
-    }
 
     @Bean
     @Primary
@@ -89,5 +74,22 @@ public class DBConfig {
         dataSource.setPoolProperties(poolProperties);
         return dataSource;
 
+    }
+
+    @Bean
+    @Primary
+    public LocalContainerEntityManagerFactoryBean primaryEntityManagerFactory() {
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(false);
+        Map<String, String> properties = new HashMap<>();
+        properties.put("hibernate.implicit_naming_strategy", "org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy");
+        properties.put("hibernate.physical_naming_strategy", "org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy");
+        properties.put("hibernate.show_sql", String.valueOf(showSQL));
+        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+        factoryBean.setDataSource(primaryDataSource());
+        factoryBean.setPackagesToScan("com.example.market");
+        factoryBean.setJpaVendorAdapter(vendorAdapter);
+        factoryBean.getJpaPropertyMap().putAll(properties);
+        return factoryBean;
     }
 }
