@@ -1,6 +1,6 @@
 package com.example.market.auth;
 
-import com.example.market.entity.User;
+import com.example.market.entity.Users;
 import com.example.market.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +24,7 @@ public class PostgresApplicationUserDaoService implements ApplicationUserDao{
 
     @Override
     public Optional<ApplicationUser> selectApplicationUserByUsername(String username) {
-        User user = userRepository.findByUserName(username);
+        Users user = userRepository.findByUserNameLike(username);
         return Optional.of(new ApplicationUser(getAuthorities(user.getRole()),
                 user.getPassword(),
                 user.getUserName(),

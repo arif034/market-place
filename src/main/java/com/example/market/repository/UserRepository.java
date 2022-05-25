@@ -1,13 +1,12 @@
 package com.example.market.repository;
 
-import com.example.market.entity.User;
+import com.example.market.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<Users, Long> {
 
-    User findByUserId(Long id);
-
-    User findByUserName(String userName);
+    Users findByUserId(Long id);
+    Users findByUserNameLike(String userName);
 }
