@@ -29,4 +29,16 @@ public class User {
 
     @Column(name = "role")
     private String role;
+
+    @Column(name = "is_account_not_expired")
+    private Boolean isAccountNotExpired;
+
+    @Column(name = "is_account_non_locked")
+    private  Boolean isAccountNonLocked;
+
+    @Column(name = "is_credentials_non_expired")
+    private  Boolean isCredentialsNonExpired;
+
+    @Column(name = "is_enabled")
+    private  Boolean isEnabled;
 }
