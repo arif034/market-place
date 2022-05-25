@@ -57,6 +57,7 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
 //                .roles("STUDENT").build();
 //
 //        return new InMemoryUserDetailsManager(arif);
+    //lol
 //    }
 
     @Override
