@@ -1,13 +1,13 @@
 package com.example.market.controller;
 
+import com.example.market.dto.request.AddProductRequest;
+import com.example.market.dto.response.AddProductResponse;
 import com.example.market.dto.response.GetAllProductsResponse;
 import com.example.market.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 /**
@@ -30,6 +30,15 @@ public class ProductController {
         this.productService = productService;
     }
 
+    /**
+     * Sets response header.
+     *
+     * @param response the response
+     */
+    @ModelAttribute
+    public void setResponseHeader(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+    }
 
     /**
      * Find all get all product response.
@@ -50,5 +59,39 @@ public class ProductController {
     @GetMapping("/get-by-id")
     public GetAllProductsResponse findById(@Valid @RequestParam(value = "id") Long id) {
         return productService.findById(id);
+    }
+
+    /**
+     * Find by name get all product response.
+     *
+     * @param name the name
+     * @return the get all products response
+     */
+    @GetMapping("/get-by-name")
+    public GetAllProductsResponse findByName(@Valid @RequestParam(value = "name") String name) {
+        return productService.findByName(name);
+    }
+
+    /**
+     * Find by category get all product response.
+     *
+     * @param category the category
+     * @return the get all products response
+     */
+    @GetMapping("/get-by-category")
+    public GetAllProductsResponse findByCategory(@Valid @RequestParam(value = "category") String category) {
+        return productService.findByCategory(category);
+    }
+
+    /**
+     * Add product response.
+     *
+     * @param addProductRequest the add product request
+     * @return the add product response
+     */
+    @PostMapping("add-product")
+    public AddProductResponse addProduct(@Valid @RequestBody AddProductRequest addProductRequest)
+    {
+        return productService.addProduct(addProductRequest);
     }
 }

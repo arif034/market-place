@@ -32,6 +32,7 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf()
                 .disable()
+                .cors().and()
                 .authorizeRequests()
 //                .antMatchers("/hello").hasRole("STUDENT")
 //                .antMatchers("/user").permitAll()
@@ -65,7 +66,7 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 }

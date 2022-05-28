@@ -1,15 +1,13 @@
 package com.example.market.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Setter
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -25,5 +23,14 @@ public class Product {
     @Column(name = "product_name")
     @JsonProperty(value = "product_name")
     private String productName;
+
+    @Column(name = "category")
+    @JsonProperty(value = "category")
+    private String category;
+
+    @Column(name = "price")
+    @Builder.Default
+    @JsonProperty(value = "price")
+    private Double price = 0.0D;
 
 }
