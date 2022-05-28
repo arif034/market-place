@@ -29,7 +29,7 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build()
                 .enable(true)
-                .groupName("login-api-version-1.0.0.0")
+                .groupName("Login-Api-Version-1.0.0.0")
                 .apiInfo(
                         new ApiInfoBuilder()
                                 .description("Login APIs")

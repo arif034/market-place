@@ -1,14 +1,19 @@
 package com.example.market.service;
 
-import com.example.market.entity.User;
+import com.example.market.dto.request.AddUserRequest;
+import com.example.market.dto.response.AddUserResponse;
+import com.example.market.entity.Users;
+import com.example.market.exception.CustomInvalidResponseException;
 
 import java.util.List;
 
 public interface UserService {
 
-    User addUser(User user);
+    AddUserResponse addUser(AddUserRequest addUserRequest) throws CustomInvalidResponseException;
 
-    List<User> getAllUsers();
+    List<Users> getAllUsers();
 
-    User findUserById(Long id);
+    Users findUserById(Long id);
+
+    Users findByUsername(String username );
 }
