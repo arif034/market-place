@@ -14,6 +14,7 @@ import javax.validation.Valid;
  * The type Product controller.
  */
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "/product")
 public class ProductController {
 
@@ -90,8 +91,9 @@ public class ProductController {
      * @return the add product response
      */
     @PostMapping("add-product")
-    public AddProductResponse addProduct(@Valid @RequestBody AddProductRequest addProductRequest)
+    public AddProductResponse addProduct(@Valid @RequestBody AddProductRequest addProductRequest, HttpServletResponse response)
     {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         return productService.addProduct(addProductRequest);
     }
 }
